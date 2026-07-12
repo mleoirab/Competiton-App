@@ -258,9 +258,15 @@ input:focus, select:focus { outline: none; border-color: var(--primary); }
 .cta-card { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px; margin-bottom: 0; }
 .cta-actions { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
 
-/* Become-a-secondary-admin request (inside a competition) */
-.admin-request { margin-bottom: 20px; }
-.admin-request-form { align-items: center; }
+/* Become-a-secondary-admin request (subtle line at the bottom of a competition) */
+.admin-request-line {
+  margin-top: 32px; padding-top: 16px; border-top: 1px solid var(--border);
+  text-align: center; font-size: .85rem;
+}
+.admin-request-line a, .link-inline { color: var(--muted); text-decoration: underline; }
+.admin-request-line a:hover, .link-inline:hover { color: var(--text); }
+.link-inline { background: none; border: none; cursor: pointer; font: inherit; padding: 0; }
+.admin-request-form { align-items: center; justify-content: center; margin-top: 20px; }
 .admin-request-form .code-input { max-width: 240px; }
 
 /* Customize admin code */
