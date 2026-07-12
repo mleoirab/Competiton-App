@@ -1,10 +1,16 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { NavLink, Outlet, Link, useParams, useLocation } from 'react-router-dom'
 import { useCompetition } from '../../useData'
 import { useAuth } from '../../auth'
+import { useToast } from '../../toast'
 import { api } from '../../api'
 import { getPlayer } from '../../player'
 import { StateGate, Banner } from '../../components/ui'
+
+// Signature of the parts we notify about, so we can tell what changed poll-to-poll.
+function standingsSig(s) {
+  return s.standings.map((r) => r.teamId + ':' + r.points).join('|')
+}
 
 // Loads one competition by player code. The viewer may be an admin (account
 // token), a specific player (device token), or a public guest. Shares the
@@ -15,6 +21,30 @@ export default function CompetitionLayout() {
   const { state, loading, error, refresh } = useCompetition(code, player?.token)
   const location = useLocation()
   const inManage = location.pathname.includes('/manage')
+
+  // Notify the viewer when live data changes between polls.
+  const { notify } = useToast()
+  const prev = useRef(null)
+  useEffect(() => {
+    if (!state) return
+    const before = prev.current
+    prev.current = state
+    if (!before) return // skip the very first load
+
+    // New fixture(s)
+    const beforeIds = new Set(before.fixtures.map((f) => f.id))
+    const added = state.fixtures.filter((f) => !beforeIds.has(f.id))
+    if (added.length === 1) notify(`New fixture added${added[0].gameName ? `: ${added[0].gameName}` : ''}`, 'info')
+    else if (added.length > 1) notify(`${added.length} new fixtures added`, 'info')
+
+    // Standings changed (a score was entered/updated)
+    if (standingsSig(before) !== standingsSig(state)) notify('Standings updated', 'success')
+
+    // This player just got placed on a team
+    if (state.me && before.me && !before.me.teamId && state.me.teamId) {
+      notify(`You’ve been placed on ${state.me.teamName}`, 'success')
+    }
+  }, [state, notify])
 
   return (
     <StateGate loading={loading} error={error}>

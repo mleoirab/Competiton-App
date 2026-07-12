@@ -329,6 +329,20 @@ input:focus, select:focus { outline: none; border-color: var(--primary); }
 .fixture-edit-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 .fixture-edit-actions select { width: auto; }
 
+/* Toast notifications */
+.toast-stack { position: fixed; bottom: 18px; right: 18px; z-index: 100; display: flex; flex-direction: column; gap: 10px; max-width: min(360px, 92vw); }
+.toast {
+  background: var(--card-2); border: 1px solid var(--border); border-left: 4px solid var(--primary);
+  border-radius: 10px; padding: 12px 16px; box-shadow: var(--shadow);
+  font-size: .9rem; font-weight: 500; cursor: pointer; animation: toast-in .22s ease;
+}
+.toast-success { border-left-color: var(--ok); }
+.toast-info { border-left-color: var(--primary); }
+@keyframes toast-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@media (max-width: 560px) {
+  .toast-stack { left: 12px; right: 12px; bottom: 12px; max-width: none; }
+}
+
 /* Live indicator */
 .live-badge { display: inline-flex; align-items: center; gap: 5px; margin-left: 10px; font-size: .78rem; font-weight: 600; color: var(--ok); }
 .live-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 0 rgba(67,199,138,.6); animation: live-pulse 1.8s ease-out infinite; }
