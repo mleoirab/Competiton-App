@@ -117,13 +117,8 @@ function BecomeAdmin({ competitionId, refresh }) {
   const [error, setError] = useState('')
   const [busy, setBusy] = useState(false)
 
-  if (!isLoggedIn) {
-    return (
-      <div className="banner banner-info">
-        Are you a co-admin? <Link to="/login">Log in</Link>, then request admin access here.
-      </div>
-    )
-  }
+  // Only offered to people logged in as a host — players/guests never see it.
+  if (!isLoggedIn) return null
 
   if (!open) {
     return (
