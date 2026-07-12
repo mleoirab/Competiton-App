@@ -15,7 +15,7 @@ export default function Layout() {
       <header className="topbar">
         <Link to={isLoggedIn ? '/dashboard' : '/'} className="brand">
           <span className="brand-icon">🏆</span>
-          <span className="brand-name">Competition Manager</span>
+          <span className="brand-name">MAP 26</span>
         </Link>
         <nav className="nav">
           {isLoggedIn ? (
