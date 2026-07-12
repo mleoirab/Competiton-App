@@ -260,6 +260,10 @@ input:focus, select:focus { outline: none; border-color: var(--primary); }
 .admin-request-form { align-items: center; }
 .admin-request-form .code-input { max-width: 240px; }
 
+/* Customize admin code */
+.code-edit { justify-content: center; margin: 8px 0; }
+.code-edit .code-input { max-width: 220px; }
+
 /* Two join codes */
 .code-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
 .code-big.admin { color: var(--primary); }

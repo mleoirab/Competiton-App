@@ -80,6 +80,7 @@ function route(action, p) {
     // --- admin management (primary only) ---
     case 'listAdmins':        return listAdmins(p);
     case 'removeAdmin':       return removeAdmin(p);
+    case 'setAdminCode':      return setAdminCode(p);
 
     // --- competition management (any admin of that competition) ---
     case 'createTeam':        return createTeam(p);
@@ -187,10 +188,16 @@ function claimAdmin(p) {
   var user = currentUser(p);
   var code = String(p.adminCode || '').trim().toUpperCase();
   if (!code) throw new Error('Enter an admin code');
-  var comp = readRows('Competitions').filter(function (c) { return String(c.adminCode).toUpperCase() === code; })[0];
-  if (!comp) throw new Error('No competition found with that admin code');
-  if (p.competitionId && String(comp.id) !== String(p.competitionId)) {
-    throw new Error('That admin code isn’t for this competition');
+  // The person is already inside a competition (they reached it with its player
+  // code), so match the admin code against THAT competition. Admin codes need
+  // only be right for their own competition — they don't have to be globally unique.
+  var comp;
+  if (p.competitionId) {
+    comp = compById(p.competitionId);
+    if (String(comp.adminCode).toUpperCase() !== code) throw new Error('Wrong admin code for this competition');
+  } else {
+    comp = readRows('Competitions').filter(function (c) { return String(c.adminCode).toUpperCase() === code; })[0];
+    if (!comp) throw new Error('No competition found with that admin code');
   }
   var already = readRows('Admins').filter(function (a) {
     return String(a.userId) === String(user.id) && String(a.competitionId) === String(comp.id);
@@ -315,6 +322,17 @@ function removeAdmin(p) {
   if (target.role === 'primary') throw new Error('Cannot remove the primary admin');
   deleteById('Admins', 'id', p.adminId);
   return { ok: true };
+}
+
+// Primary admin sets a custom admin code. It's matched only within its own
+// competition (see claimAdmin), so it doesn't need to be globally unique — just
+// a sensible format.
+function setAdminCode(p) {
+  var ctx = requirePrimary(p, p.competitionId);
+  var code = String(p.adminCode || '').trim().toUpperCase();
+  if (!/^[A-Z0-9]{4,12}$/.test(code)) throw new Error('Code must be 4–12 letters or numbers (no spaces or symbols)');
+  updateById('Competitions', 'id', ctx.comp.id, { adminCode: code });
+  return { adminCode: code };
 }
 
 // ===== Teams ================================================================

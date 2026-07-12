@@ -51,6 +51,7 @@ export const api = {
   // admin management (primary only)
   listAdmins: (token, competitionId) => call('listAdmins', { token, competitionId }),
   removeAdmin: (token, competitionId, adminId) => call('removeAdmin', { token, competitionId, adminId }),
+  setAdminCode: (token, competitionId, adminCode) => call('setAdminCode', { token, competitionId, adminCode }),
 
   // competition management (any admin)
   createTeam: (token, competitionId, name) => call('createTeam', { token, competitionId, name }),
