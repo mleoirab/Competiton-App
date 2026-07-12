@@ -16,7 +16,7 @@ export default function Teams() {
             <div key={team.id} className="card team-card-view" style={{ borderTopColor: team.color || 'var(--border)' }}>
               <div className="team-card-head">
                 <h3 className="team-heading"><TeamBadge team={team} size="lg" /> {team.name}</h3>
-                <span className="pill pill-muted">{team.players.length} players</span>
+                <span className="pill pill-muted">{team.players.length} {team.players.length === 1 ? 'player' : 'players'}</span>
               </div>
               {team.players.length === 0 ? (
                 <p className="muted">No players yet.</p>
