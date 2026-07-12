@@ -97,3 +97,11 @@ export function teamName(state, id) {
 export function getTeam(state, id) {
   return state?.teams?.find((t) => t.id === id) || null
 }
+
+// Show a date only if it's a real one (YYYY-MM-DD, or the date part of an ISO
+// string). Anything else (blank, or a stray value) renders as nothing.
+export function fmtDate(d) {
+  if (!d) return ''
+  const m = String(d).match(/^(\d{4})-(\d{2})-(\d{2})/)
+  return m ? m[0] : ''
+}

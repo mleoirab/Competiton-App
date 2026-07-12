@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { api } from '../../../api'
 import { useAuth } from '../../../auth'
-import { useCompetitionContext, teamName } from '../../../useData'
+import { useCompetitionContext, teamName, fmtDate } from '../../../useData'
 import { useAction } from '../../../useAction'
 import { PageHeader, Banner, Empty } from '../../../components/ui'
 
@@ -132,7 +132,7 @@ function FixtureRow({ f, state, compId, token, run, busy }) {
       <div className="fixture-edit-head">
         <strong>{f.gameName || `${f.participants.length}-team fixture`}</strong>
         <div className="fixture-edit-meta">
-          {f.date && <span className="muted">{f.date}</span>}
+          {fmtDate(f.date) && <span className="muted">{fmtDate(f.date)}</span>}
           {f.venue && <span className="muted">· {f.venue}</span>}
         </div>
       </div>

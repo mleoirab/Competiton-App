@@ -1,4 +1,4 @@
-import { useCompetitionContext, getTeam } from '../../useData'
+import { useCompetitionContext, getTeam, fmtDate } from '../../useData'
 import { PageHeader, Empty } from '../../components/ui'
 import TeamTag from '../../components/TeamTag'
 
@@ -55,7 +55,7 @@ function FixtureCard({ f, state }) {
         <span className={`pill pill-${done ? 'ok' : 'muted'}`}>
           {STATUS_LABELS[f.status] || f.status}
         </span>
-        {f.date && <span className="muted">{f.date}</span>}
+        {fmtDate(f.date) && <span className="muted">{fmtDate(f.date)}</span>}
         {f.venue && <span className="muted">· {f.venue}</span>}
         <span className="muted">· {f.participants.length} teams</span>
       </div>
