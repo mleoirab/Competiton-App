@@ -40,10 +40,20 @@ export default function CompetitionLayout() {
     // Standings changed (a score was entered/updated)
     if (standingsSig(before) !== standingsSig(state)) notify('Standings updated', 'success')
 
-    // This player just got placed on a team
-    if (state.me && before.me && !before.me.teamId && state.me.teamId) {
-      notify(`You’ve been placed on ${state.me.teamName}`, 'success')
+    // This player's team changed (placed, moved, or removed)
+    if (state.me && before.me && (state.me.teamId || '') !== (before.me.teamId || '')) {
+      if (state.me.teamId) notify(`You’ve been moved to ${state.me.teamName}`, 'success')
+      else notify('You’ve been removed from your team', 'info')
     }
+
+    // Any other existing player switched teams (not a brand-new joiner)
+    const beforeTeam = {}
+    before.players.forEach((p) => { beforeTeam[p.id] = p.teamId || '' })
+    const myId = state.me?.playerId
+    const othersSwitched = state.players.some((p) =>
+      p.id !== myId && beforeTeam[p.id] !== undefined && (p.teamId || '') !== beforeTeam[p.id]
+    )
+    if (othersSwitched) notify('Teams updated', 'info')
   }, [state, notify])
 
   return (
