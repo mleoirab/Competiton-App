@@ -353,3 +353,17 @@ input:focus, select:focus { outline: none; border-color: var(--primary); }
   .page-header { align-items: flex-start; }
   .fixture-edit-teams { grid-template-columns: 1fr auto auto auto 1fr; font-size: .9rem; }
 }
+
+/* ===== Small screens: let tables fit instead of scrolling sideways ===== */
+@media (max-width: 560px) {
+  .content { padding: 20px 12px 48px; }
+  /* Drop the forced 480px min-width so tables shrink to the screen. */
+  .table { min-width: 0; }
+  .table th, .table td { padding: 10px 8px; font-size: .9rem; }
+  .table .num { width: auto; }
+  .table .rank { width: 34px; }
+  .col-num, .col-rank { width: 40px; }
+  .code-big { font-size: 1.8rem; letter-spacing: .1em; }
+  .comp-header h1 { font-size: 1.4rem; }
+  .page-header h1 { font-size: 1.4rem; }
+}
