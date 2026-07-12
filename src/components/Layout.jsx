@@ -38,11 +38,6 @@ export default function Layout() {
       <main className="content">
         <Outlet />
       </main>
-
-      <footer className="footer">
-        <span>Competition Manager</span>
-        <span className="muted">Built with React · data in Google Sheets</span>
-      </footer>
     </div>
   )
 }
