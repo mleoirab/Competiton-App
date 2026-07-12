@@ -155,11 +155,14 @@ input:focus, select:focus { outline: none; border-color: var(--primary); }
 .podium-points { color: var(--muted); font-size: .88rem; margin-bottom: 12px; }
 .podium-bar {
   width: 100%; border-radius: 8px 8px 0 0; color: #0f1220; font-weight: 800;
-  display: flex; align-items: center; justify-content: center;
+  display: flex; align-items: center; justify-content: center; height: 52px;
+  background: linear-gradient(180deg, #f0b98a, #cd7f4f);
 }
-.place-1 .podium-bar { height: 96px; background: linear-gradient(180deg, #ffe58a, var(--accent)); }
-.place-2 .podium-bar { height: 70px; background: linear-gradient(180deg, #e6ebff, #b8c1e0); }
-.place-3 .podium-bar { height: 52px; background: linear-gradient(180deg, #f0b98a, #cd7f4f); }
+/* Height + colour track the real RANK, so tied teams look identical. */
+.podium-bar.rank-1 { height: 96px; background: linear-gradient(180deg, #ffe58a, var(--accent)); }
+.podium-bar.rank-2 { height: 70px; background: linear-gradient(180deg, #e6ebff, #b8c1e0); }
+.podium-bar.rank-3 { height: 52px; background: linear-gradient(180deg, #f0b98a, #cd7f4f); }
+/* Horizontal order only (2nd, 1st, 3rd) — independent of height. */
 .place-1 { order: 2; } .place-2 { order: 1; } .place-3 { order: 3; }
 
 /* ===== Tables ===== */

@@ -26,7 +26,8 @@ export default function Podium({ standings }) {
             <div className="podium-medal">{MEDALS[row.rank] || `#${row.rank}`}</div>
             <div className="podium-name">{row.name}</div>
             <div className="podium-points">{row.points} pts</div>
-            <div className="podium-bar">{row.rank}</div>
+            {/* Height & colour come from the real rank, so tied teams match. */}
+            <div className={`podium-bar rank-${row.rank}`}>{row.rank}</div>
           </div>
         )
       })}
