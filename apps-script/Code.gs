@@ -26,7 +26,7 @@ var SHEETS = {
   Competitions: ['id', 'name', 'playerCode', 'adminCode', 'ownerId', 'createdAt'],
   Admins:       ['id', 'userId', 'competitionId', 'role', 'createdAt'],   // role: primary | secondary
   Players:      ['id', 'competitionId', 'name', 'teamId', 'status', 'token', 'createdAt'],
-  Teams:        ['id', 'competitionId', 'name', 'createdAt'],
+  Teams:        ['id', 'competitionId', 'name', 'color', 'mascot', 'createdAt'],
   Games:        ['id', 'competitionId', 'name', 'description', 'createdAt'],
   // participants = JSON: [{ "teamId": "t1", "score": "" }, ...] — any number of teams.
   Fixtures:     ['id', 'competitionId', 'gameId', 'date', 'venue', 'participants', 'status', 'createdAt'],
@@ -84,6 +84,7 @@ function route(action, p) {
 
     // --- competition management (any admin of that competition) ---
     case 'createTeam':        return createTeam(p);
+    case 'updateTeam':        return updateTeam(p);
     case 'deleteTeam':        return deleteTeam(p);
     case 'assignPlayer':      return assignPlayer(p);
     case 'setPlayerStatus':   return setPlayerStatus(p);
@@ -276,7 +277,7 @@ function getCompetition(p) {
 
   // Standings: raw fixture score adds to each team's total.
   var totals = {};
-  teams.forEach(function (t) { totals[t.id] = { teamId: t.id, name: t.name, points: 0, games: 0 }; });
+  teams.forEach(function (t) { totals[t.id] = { teamId: t.id, name: t.name, color: t.color || '', mascot: t.mascot || '', points: 0, games: 0 }; });
   fixtures.forEach(function (f) {
     f.participants.forEach(function (part) {
       var hasScore = part.score !== '' && part.score !== null && !isNaN(Number(part.score));
@@ -342,9 +343,24 @@ function createTeam(p) {
   var name = String(p.name || '').trim();
   if (!name) throw new Error('Team name is required');
   var id = newId('t');
-  appendRow('Teams', { id: id, competitionId: ctx.comp.id, name: name, createdAt: nowMs() });
+  appendRow('Teams', {
+    id: id, competitionId: ctx.comp.id, name: name,
+    color: String(p.color || '#6C8CFF'), mascot: String(p.mascot || '🏳️'), createdAt: nowMs(),
+  });
   assignPendingPlayers(ctx.comp.id);
   return { id: id };
+}
+
+function updateTeam(p) {
+  requireAdmin(p, p.competitionId);
+  var patch = {};
+  ['name', 'color', 'mascot'].forEach(function (k) { if (p[k] !== undefined) patch[k] = p[k]; });
+  if (patch.name !== undefined) {
+    patch.name = String(patch.name).trim();
+    if (!patch.name) throw new Error('Team name is required');
+  }
+  updateById('Teams', 'id', p.teamId, patch);
+  return { ok: true };
 }
 
 function deleteTeam(p) {

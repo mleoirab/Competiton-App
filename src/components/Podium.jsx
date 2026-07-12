@@ -23,6 +23,7 @@ export default function Podium({ standings }) {
         if (!row) return <div key={place} className={`podium-slot empty-slot place-${place}`} />
         return (
           <div key={place} className={`podium-slot place-${place}`}>
+            <div className="podium-mascot" style={{ background: row.color || 'var(--card-2)' }}>{row.mascot || '🏳️'}</div>
             <div className="podium-medal">{MEDALS[row.rank] || `#${row.rank}`}</div>
             <div className="podium-name">{row.name}</div>
             <div className="podium-points">{row.points} pts</div>

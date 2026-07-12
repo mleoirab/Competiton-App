@@ -1,6 +1,7 @@
 import { useCompetitionContext } from '../../useData'
 import { PageHeader, Empty } from '../../components/ui'
 import Podium from '../../components/Podium'
+import TeamTag from '../../components/TeamTag'
 
 export default function Standings() {
   const { state } = useCompetitionContext()
@@ -22,7 +23,7 @@ export default function Standings() {
                 {state.standings.map((row) => (
                   <tr key={row.teamId}>
                     <td className="rank">{row.rank}</td>
-                    <td>{row.name}</td>
+                    <td><TeamTag team={row} size="sm" /></td>
                     <td className="num">{row.games}</td>
                     <td className="num strong">{row.points}</td>
                   </tr>

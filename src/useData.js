@@ -92,3 +92,8 @@ export function teamName(state, id) {
   const t = state?.teams?.find((t) => t.id === id)
   return t ? t.name : '—'
 }
+
+// Look up the full team object (name, color, mascot) by id.
+export function getTeam(state, id) {
+  return state?.teams?.find((t) => t.id === id) || null
+}

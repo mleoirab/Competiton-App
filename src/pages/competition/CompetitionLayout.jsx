@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
 import { NavLink, Outlet, Link, useParams, useLocation } from 'react-router-dom'
-import { useCompetition } from '../../useData'
+import { useCompetition, getTeam } from '../../useData'
 import { useAuth } from '../../auth'
 import { useToast } from '../../toast'
 import { api } from '../../api'
 import { getPlayer } from '../../player'
 import { StateGate, Banner } from '../../components/ui'
+import { TeamBadge } from '../../components/TeamTag'
 
 // Signature of the parts we notify about, so we can tell what changed poll-to-poll.
 function standingsSig(s) {
@@ -65,8 +66,8 @@ export default function CompetitionLayout() {
               <h1>{state.competition.name}</h1>
               <p className="muted">
                 Code: <code className="code-chip">{state.competition.playerCode}</code>
-                {state.me?.teamName
-                  ? <> · You’re <b>{state.me.name}</b> on <b>{state.me.teamName}</b></>
+                {state.me?.teamId
+                  ? <> · You’re <b>{state.me.name}</b> on <span className="team-tag inline-team"><TeamBadge team={getTeam(state, state.me.teamId)} size="sm" /> <b>{state.me.teamName}</b></span></>
                   : state.me
                     ? <> · You’re <b>{state.me.name}</b> (awaiting a team)</>
                     : null}

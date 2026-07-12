@@ -34,7 +34,7 @@ export default function ManagePlayers() {
                       onChange={(e) => run(() => api.assignPlayer(token, compId, pl.id, e.target.value))}
                     >
                       <option value="">— Unassigned —</option>
-                      {state.teams.map((t) => <option key={t.id} value={t.id}>{t.name}</option>)}
+                      {state.teams.map((t) => <option key={t.id} value={t.id}>{t.mascot} {t.name}</option>)}
                     </select>
                   </td>
                   <td>

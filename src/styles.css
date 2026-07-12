@@ -332,6 +332,49 @@ input:focus, select:focus { outline: none; border-color: var(--primary); }
 .fixture-edit-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 .fixture-edit-actions select { width: auto; }
 
+/* Team identity: colored badge (mascot inside) + name */
+.team-tag { display: inline-flex; align-items: center; gap: 8px; vertical-align: middle; }
+.team-tag-name { font-weight: 600; }
+.inline-team { gap: 5px; }
+.team-badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 50%; line-height: 1; flex: 0 0 auto;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.25);
+}
+.team-badge-sm { width: 22px; height: 22px; font-size: 13px; }
+.team-badge-md { width: 30px; height: 30px; font-size: 17px; }
+.team-badge-lg { width: 44px; height: 44px; font-size: 26px; }
+.team-heading { display: flex; align-items: center; gap: 10px; }
+
+/* Team create/edit form */
+.team-form-row { display: flex; gap: 14px; align-items: flex-end; flex-wrap: wrap; }
+.team-form-row .grow { flex: 1; min-width: 160px; }
+.color-field { display: flex; flex-direction: column; gap: 6px; font-size: .88rem; color: var(--muted); }
+.color-field input[type="color"] { width: 52px; height: 42px; padding: 2px; background: var(--bg-elev); border: 1px solid var(--border); border-radius: 10px; cursor: pointer; }
+.mascot-field { display: flex; flex-direction: column; gap: 6px; }
+.field-label { font-size: .88rem; color: var(--muted); }
+.mascot-preview {
+  width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center;
+  justify-content: center; font-size: 22px; box-shadow: inset 0 0 0 1px rgba(255,255,255,.25);
+}
+.emoji-picker { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 12px; }
+.emoji-btn {
+  width: 38px; height: 38px; font-size: 20px; border: 1px solid var(--border);
+  background: var(--bg-elev); border-radius: 10px; cursor: pointer; padding: 0;
+}
+.emoji-btn:hover { border-color: var(--primary); }
+.emoji-btn.on { border-color: var(--primary); background: rgba(108,140,255,.18); }
+
+/* Podium mascot badge */
+.podium-mascot {
+  width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center;
+  justify-content: center; font-size: 22px; margin-bottom: 2px;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.3);
+}
+
+/* Team cards get a colored top accent */
+.team-card-view { border-top: 3px solid var(--border); }
+
 /* Toast notifications */
 .toast-stack { position: fixed; bottom: 18px; right: 18px; z-index: 100; display: flex; flex-direction: column; gap: 10px; max-width: min(360px, 92vw); }
 .toast {

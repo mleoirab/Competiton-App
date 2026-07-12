@@ -49,6 +49,7 @@ export default function ManageFixtures() {
             {state.teams.map((t) => (
               <label key={t.id} className={`check-item ${selected[t.id] ? 'on' : ''}`}>
                 <input type="checkbox" checked={!!selected[t.id]} onChange={() => toggle(t.id)} />
+                <span className="team-badge team-badge-sm" style={{ background: t.color || 'var(--card-2)' }}>{t.mascot}</span>
                 {t.name}
               </label>
             ))}

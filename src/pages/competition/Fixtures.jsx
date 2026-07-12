@@ -1,5 +1,6 @@
-import { useCompetitionContext, teamName } from '../../useData'
+import { useCompetitionContext, getTeam } from '../../useData'
 import { PageHeader, Empty } from '../../components/ui'
+import TeamTag from '../../components/TeamTag'
 
 const STATUS_LABELS = {
   scheduled: 'Scheduled',
@@ -63,7 +64,7 @@ function FixtureCard({ f, state }) {
           const leader = done && (Number(p.score) || 0) === topScore
           return (
             <li key={p.teamId} className={`fixture-part ${leader ? 'leader' : ''}`}>
-              <span className="fixture-part-team">{teamName(state, p.teamId)}</span>
+              <span className="fixture-part-team"><TeamTag team={getTeam(state, p.teamId)} size="sm" /></span>
               <span className="fixture-part-score">{done ? (p.score === '' ? 0 : p.score) : '—'}</span>
             </li>
           )

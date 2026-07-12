@@ -54,7 +54,9 @@ export const api = {
   setAdminCode: (token, competitionId, adminCode) => call('setAdminCode', { token, competitionId, adminCode }),
 
   // competition management (any admin)
-  createTeam: (token, competitionId, name) => call('createTeam', { token, competitionId, name }),
+  // team: { name, color, mascot }
+  createTeam: (token, competitionId, team) => call('createTeam', { token, competitionId, ...team }),
+  updateTeam: (token, competitionId, teamId, patch) => call('updateTeam', { token, competitionId, teamId, ...patch }),
   deleteTeam: (token, competitionId, teamId) => call('deleteTeam', { token, competitionId, teamId }),
   assignPlayer: (token, competitionId, playerId, teamId) =>
     call('assignPlayer', { token, competitionId, playerId, teamId }),
